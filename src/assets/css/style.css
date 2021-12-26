@@ -1,3 +1,5 @@
+@import "../fonts/fonts.min.css";
+
 :root{
     --darkblue: #171923;
     --bg: #15161a;
@@ -48,7 +50,7 @@ body {
     font-size: 55px;
 }
 .txt-bold {
-    font-weight: bold;
+    font-family: 'Roboto-black', sans-serif;
 }
 .txt-center {
     text-align: center;
