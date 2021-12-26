@@ -62,5 +62,6 @@ body {
 @media all and (max-width: 600px) {
     .txt-xxl {
         font-size: 40px;
+        margin: 0 2px;
     }
 }

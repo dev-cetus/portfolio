@@ -7,11 +7,11 @@
             <p>I'm computer science student & developer.</p>
           </div>
           <div class="home__head__SN">
-            <a class="btn-github" href="https://github.com/dev-cetus">
+            <a class="btn-github" href="https://github.com/dev-cetus" target="_blank">
               <i class="fab fa-github"></i>
               GitHub Profile
             </a>
-            <a class="btn-discord" href="https://discord.com/users/522123053581467669">
+            <a class="btn-discord" href="https://discord.com/users/522123053581467669" target="_blank">
               <i class="fab fa-discord"></i>
               Discord Profile
             </a>
@@ -244,6 +244,10 @@ export default {
   }
 }
 @media all and (max-width: 550px) {
+  .home__head {
+    padding-left: 0;
+    text-align: center;
+  }
   .home__head__SN {
     flex-direction: column;
   }
