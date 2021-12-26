@@ -7,11 +7,11 @@
             <p>I'm computer science student & developer.</p>
           </div>
           <div class="home__head__SN">
-            <a class="btn-github txt-bold" href="https://github.com/dev-cetus" target="_blank">
+            <a class="btn-github txt-bold" href="https://github.com/dev-cetus" target="_blank" ref="noopener">
               <i class="fab fa-github"></i>
               GitHub Profile
             </a>
-            <a class="btn-discord txt-bold" href="https://discord.com/users/522123053581467669" target="_blank">
+            <a class="btn-discord txt-bold" href="https://discord.com/users/522123053581467669" target="_blank" rel="noopener">
               <i class="fab fa-discord"></i>
               Discord Profile
             </a>

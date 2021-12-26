@@ -4,7 +4,7 @@
     url('roboto-black-webfont.woff') format('woff');
     font-weight: normal;
     font-style: normal;
-
+    font-display: swap;
 }
 @font-face {
     font-family: 'Roboto';
@@ -12,4 +12,5 @@
          url('roboto-regular-webfont.woff') format('woff');
     font-weight: normal;
     font-style: normal;
+    font-display: swap;
 }

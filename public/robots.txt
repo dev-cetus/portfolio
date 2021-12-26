@@ -1,0 +1,7 @@
+User-agent: Googlebot
+Allow: /
+
+User-agent: *
+Allow: /
+
+Sitemap: http://cetus.devioo.com/sitemap.xml
