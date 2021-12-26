@@ -7,7 +7,7 @@
             <p>I'm computer science student & developer.</p>
           </div>
           <div class="home__head__SN">
-            <a class="btn-github txt-bold" href="https://github.com/dev-cetus" target="_blank" ref="noopener">
+            <a class="btn-github txt-bold" href="https://github.com/dev-cetus" target="_blank" rel="noopener">
               <i class="fab fa-github"></i>
               GitHub Profile
             </a>
