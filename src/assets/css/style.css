@@ -1,0 +1,66 @@
+:root{
+    --darkblue: #171923;
+    --bg: #15161a;
+    --gray-text: #718096;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+    color: #fff;
+    background-color: var(--bg);
+    margin: 0;
+    padding: 0;
+    font-weight: 400;
+    overflow-x:hidden;
+    overflow-y:scroll
+}
+
+.btn-primary {
+    transition: all 0.3s ease-in-out;
+    padding: 10px;
+    border-radius: 5px;
+    color: #718096;
+    text-decoration: none;
+}
+.btn-primary i {
+    opacity: .16;
+}
+.btn-primary:hover {
+    background-color: rgba(255, 255, 255, 0.06);
+}
+.no-list-style {
+    list-style: none;
+}
+.list-primary {
+    color: white;
+}
+.list-primary a{
+    text-decoration: none;
+    color: white;
+}
+.txt-xxl {
+    font-size: 55px;
+}
+.txt-bold {
+    font-weight: bold;
+}
+.txt-center {
+    text-align: center;
+}
+
+@media all and (max-width: 900px) {
+    .txt-xxl {
+        font-size: 45px;
+    }
+}
+@media all and (max-width: 600px) {
+    .txt-xxl {
+        font-size: 40px;
+    }
+}
