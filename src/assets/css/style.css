@@ -35,6 +35,7 @@ body {
 }
 .btn-primary:hover {
     background-color: rgba(255, 255, 255, 0.06);
+    color: rgba(255, 255, 255, 0.8);
 }
 .no-list-style {
     list-style: none;

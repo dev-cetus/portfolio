@@ -5,6 +5,12 @@
           <a href="https://github.com/dev-cetus" title="GitHub" class="btn-primary">
             <i class="fab fa-github"></i>
           </a>
+          <a href="https://twitter.com/dev_cetus" title="Twitter" class="btn-primary">
+            <i class="fab fa-twitter"></i>
+          </a>
+          <router-link to="Search" title="Search" class="btn-primary">
+            <i class="fas fa-search"></i>
+          </router-link>
         </li>
       </ul>
     </footer>
