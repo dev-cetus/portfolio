@@ -27,9 +27,10 @@
           <div class="txt-bold txt-xxl txt-center">My GitHub repos <i class="twa twa-books"></i></div>
           <div class="repos">
             <div v-for="repo in repos" :key="repo.id" class="repoBox">
-              <a v-if="!repo.fork && repo.visibility === 'public'" v-bind:href="repo.html_url" target="_blank" rel="noopener">
+              <a v-bind:href="repo.html_url" target="_blank" rel="noopener">
                 <div>
                   <div class="name" v-bind:title="repo.name">{{ repo.name }}</div>
+                  <hr>
                   <div class="description">{{ repo.description }}</div>
                 </div>
                 <div>
@@ -181,9 +182,18 @@ export default {
 }
 #github .repoBox .name {
   font-size: 1.5rem;
-  width: 60%;
-  margin-bottom: 0.5rem;
+  width: 100%;
+
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+#github .repoBox hr {
+  margin-left: 0;
+  margin-top: 0;
+  border:none;
   border-bottom: 2px #f7ff00 solid;
+  width: 60%;
 }
 #github .repoBox .description {
   font-size: 1rem;

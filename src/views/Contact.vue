@@ -19,7 +19,6 @@
 <script>
 import Header from '@/components/Header.vue'
 import Footer from '@/components/Footer.vue'
-import {mapState} from 'vuex'
 
   export default {
     name: 'Contact',
@@ -28,9 +27,23 @@ import {mapState} from 'vuex'
       Footer
     },
     computed: {
-      ...mapState({
-        ways: state => state.ways
-      })
+        ways: [
+          {
+            name: "Mail",
+            link: 'mailto:cetus@ik.me',
+            twemoji: 'twa-e-mail'
+          },
+          {
+            name: "Discord",
+            link: 'https://discord.com/users/522123053581467669',
+            twemoji: 'twa-speech-balloon'
+          },
+          {
+            name: "Twitter",
+            link: 'https://twitter.com/dev_cetus',
+            twemoji: 'twa-bird'
+          }
+        ],
     }
   }
 </script>
