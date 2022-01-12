@@ -26,7 +26,8 @@ import Footer from '@/components/Footer.vue'
       Header,
       Footer
     },
-    computed: {
+    data () {
+      return {
         ways: [
           {
             name: "Mail",
@@ -44,6 +45,7 @@ import Footer from '@/components/Footer.vue'
             twemoji: 'twa-bird'
           }
         ],
+      }
     }
   }
 </script>
