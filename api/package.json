@@ -1,0 +1,22 @@
+{
+  "name": "api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "server": "node src/server.js",
+    "createUser": "node scripts/createDefaultUser.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@fastify/cors": "7.0.0",
+    "@fastify/jwt": "5.0.0",
+    "chalk": "4.1.2",
+    "crypto-js": "4.1.1",
+    "dayjs": "1.11.1",
+    "fastify": "3.29.0",
+    "mongoose": "^6.3.1"
+  }
+}

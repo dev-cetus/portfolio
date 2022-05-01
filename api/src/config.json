@@ -1,0 +1,15 @@
+{
+  "server": {
+    "port": 3000
+  },
+  "cors": {
+    "client_uri": ["http://localhost:3000", "https://cetus.devioo.com", "https://dev-cetus.me"]
+  },
+  "jwt": {
+    "secret": "cetus",
+    "expiresIn": "1d"
+  },
+  "mongodb": {
+    "uri": "mongodb://localhost:27017/portfolio"
+  }
+}
