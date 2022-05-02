@@ -54,7 +54,7 @@ mongoose.connect(config.mongodb.uri, {
 });
 
 // Start the server!
-fastify.listen(config.server.port, (err, address) => {
+fastify.listen(config.server.port, config.server.address, (err, address) => {
     if (err) {
         fastify.log.error(err);
         process.exit(1);
