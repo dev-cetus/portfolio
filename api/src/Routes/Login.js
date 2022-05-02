@@ -6,6 +6,12 @@ async function routes(fastify) {
         method: 'POST',
         url: '/',
         handler: async (request, reply) => {
+            if (!request.body) {
+                reply.code(400).send({
+                    message: 'No body found in request'
+                });
+            }
+
             let { username, password } = request.body;
 
             if (!username || !password) {
@@ -35,6 +41,8 @@ async function routes(fastify) {
             let token = fastify.jwt.sign({
                 id: user.id,
                 username: user.username,
+                perms: user.perms,
+                createdAt: user.createdAt,
                 iat: Date.now(),
             });
 

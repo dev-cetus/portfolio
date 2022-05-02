@@ -43,6 +43,7 @@ readLine.question('Username: ', (answer) => {
                     return console.log(`User ${user.username} created`);
                 }
             });
+            process.exit(0);
         });
     });
 });

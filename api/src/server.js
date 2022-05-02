@@ -35,8 +35,9 @@ process.on('unhandledRejection', async (reason, promise) => {
 process.on('warning', (...args) => { Logger.warn(...args) });
 
 // Register Routes
-['Users', 'Posts', 'Login'].forEach(route => {
+['Users', 'Posts', 'Login', 'newAccount'].forEach(route => {
     fastify.register(require(`./Routes/${route}`), { prefix: `/${route.toLowerCase()}` });
+    Logger.route(`Registered route: ${route}`);
 });
 
 // Connect to MongoDB

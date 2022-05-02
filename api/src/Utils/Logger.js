@@ -15,6 +15,10 @@ function info(content) {
     write(`\t${content}`, 'black', 'bgBlue', 'INFO', false)
 }
 
+function route(content) {
+    write(`\t${content}`, 'black', 'bgGreen', 'ROUTE', false)
+}
+
 function write(content, tagColor, bgTagColor, tag, error = false) {
     const timestamp = `[${dayjs().format('DD/MM/YY - HH:mm:ss')}]`;
     const logTag = `[${tag}]`;
@@ -31,5 +35,6 @@ function write(content, tagColor, bgTagColor, tag, error = false) {
 module.exports = {
     error,
     warn,
-    info
+    info,
+    route
 };

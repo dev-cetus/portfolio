@@ -1,11 +1,27 @@
 const { Users } = require('../Models/index');
 const cryptoJS = require('crypto-js');
+const fastifyJwt = require("@fastify/jwt");
 
 async function routes(fastify) {
     fastify.route({
         method: 'POST',
         url: '/',
         handler: async (request, reply) => {
+            // verify jwt
+            await request.jwtVerify();
+
+            if (request.user.perms !== 'admin') {
+                reply.code(403).send({
+                    message: 'You do not have permission to do this.'
+                });
+            }
+
+            if (!request.body) {
+                reply.code(400).send({
+                    message: 'No data was sent.'
+                });
+            }
+
             let { username, email, password, perms } = request.body;
 
             if (!username || !password || !email || !perms) {
@@ -30,8 +46,8 @@ async function routes(fastify) {
 
             // check if username is taken
             let user = await Users.findOne({
-                where: {
-                    username: username
+                username: {
+                    $regex: new RegExp(username, 'i')
                 }
             });
 
@@ -43,8 +59,8 @@ async function routes(fastify) {
 
             // check if email is taken
             user = await Users.findOne({
-                where: {
-                    email: email
+                email: {
+                    $regex: new RegExp(email, 'i')
                 }
             });
 
@@ -66,7 +82,7 @@ async function routes(fastify) {
                 case 'admin':
                     break;
                 default:
-                    reply.code(400).send({
+                    return reply.code(400).send({
                         message: 'Invalid permissions'
                     });
             }
@@ -78,22 +94,23 @@ async function routes(fastify) {
                 email,
                 password: passwordHash,
                 perms
+            }).then(user => {
+                let token = fastify.jwt.sign({
+                    id: user.id,
+                    username: user.username,
+                    perms: user.perms,
+                    createdAt: user.createdAt,
+                    iat: Date.now(),
+                });
+
+                return reply.send({
+                    token: token,
+                    exp: fastify.jwt.decode(token).exp,
+                })
             }).catch(() => {
                 reply.code(400).send({
                     message: 'Error creating user'
                 });
-            })
-
-            let token = fastify.jwt.sign({
-                id: user.id,
-                username: user.username,
-                iat: Date.now(),
-            });
-
-            return reply.send({
-                token: token,
-                exp: fastify.jwt.decode(token).exp,
-                message: 'User created'
             })
         }
     });
