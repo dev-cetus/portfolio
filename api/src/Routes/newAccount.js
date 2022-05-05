@@ -51,7 +51,7 @@ async function routes(fastify) {
                 }
             });
 
-            if (user) {
+            if (user && user.username.toLowerCase() === username.toLowerCase()) {
                 return reply.code(400).send({
                     message: 'Username is already taken'
                 });
@@ -95,17 +95,11 @@ async function routes(fastify) {
                 password: passwordHash,
                 perms
             }).then(user => {
-                let token = fastify.jwt.sign({
+                return reply.send({
                     id: user.id,
                     username: user.username,
+                    email: user.email,
                     perms: user.perms,
-                    createdAt: user.createdAt,
-                    iat: Date.now(),
-                });
-
-                return reply.send({
-                    token: token,
-                    exp: fastify.jwt.decode(token).exp,
                 })
             }).catch(() => {
                 reply.code(400).send({

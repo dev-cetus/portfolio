@@ -84,30 +84,22 @@ async function routes(fastify) {
                     $regex: new RegExp(request.body.username, 'i')
                 }
             }).then(async user => {
-                console
                 if (user) {
-                    return reply.code(400).send({
-                        message: 'Username already exists'
-                    });
+                    if (user.username.toLowerCase() === request.body.username.toLowerCase()) {
+                        return reply.code(400).send({
+                            message: 'Username already exists'
+                        });
+                    }
                 }
 
                 Users.findOneAndUpdate({
                     id: request.params.id
                 }, {
-                    username: request.body.username
-                }, (err, user) => {
-                    if (err) {
-                        return reply.code(500).send({
-                            message: 'Internal server error'
-                        });
-                    }
-
-                    if (!user) {
-                        return reply.code(404).send({
-                            message: 'User not found'
-                        });
-                    }
-
+                    username: request.body.username,
+                    updatedAt: Date.now()
+                }, {
+                    new: true
+                }).then(user => {
                     return reply.send({
                         id: user.id,
                         username: user.username,
@@ -116,6 +108,14 @@ async function routes(fastify) {
                         createdAt: user.createdAt,
                         updatedAt: user.updatedAt
                     });
+                }).catch(() => {
+                    return reply.code(500).send({
+                        message: 'An error occurred'
+                    });
+                });
+            }).catch(() => {
+                return reply.code(500).send({
+                    message: 'An error occurred'
                 });
             });
         }

@@ -55,7 +55,7 @@ readLine.question('Username: ', (answer) => {
                 }
             });
 
-            if (user) {
+            if (user.username.toLowerCase() === username.toLowerCase()) {
                 console.log("Username is already taken");
                 process.exit(1);
             }
