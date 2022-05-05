@@ -27,9 +27,56 @@ readLine.question('Username: ', (answer) => {
     let username = answer.toString();
     readLine.question('Email: ', (answer) => {
         let email = answer.toString();
-        readLine.question('Password: ', (answer) => {
+        readLine.question('Password: ', async (answer) => {
             let password = answer.toString();
             readLine.close();
+
+            if (!username || !password || !email) {
+                console.log("Please enter all the fields");
+                process.exit(1);
+            }
+
+            if (username.length < 3 || username.length > 20) {
+                console.log("Username must be between 3 and 20 characters");
+                process.exit(1);
+            }
+
+            // verify email with regex
+            if (!/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z\d](?:[a-zA-Z\d-]{0,61}[a-zA-Z\d])?(?:\.[a-zA-Z\d](?:[a-zA-Z\d-]{0,61}[a-zA-Z\d])?)*$/.test(email)) {
+                console.log("Email is not valid");
+                process.exit(1);
+            }
+
+
+            // check if username is taken
+            let user = await Users.findOne({
+                username: {
+                    $regex: new RegExp(username, 'i')
+                }
+            });
+
+            if (user) {
+                console.log("Username is already taken");
+                process.exit(1);
+            }
+
+            // check if email is taken
+            user = await Users.findOne({
+                email: {
+                    $regex: new RegExp(email, 'i')
+                }
+            });
+
+            if (user) {
+                console.log("Email is already taken");
+                process.exit(1);
+            }
+
+            // verify password size
+            if (password.length < 8) {
+                console.log("Password must be at least 8 characters");
+                process.exit(1);
+            }
 
             Users.create({
                 username: username,
@@ -38,12 +85,13 @@ readLine.question('Username: ', (answer) => {
                 perms: 'admin'
             }, (err, user) => {
                 if (err) {
-                    return console.log(err);
+                    console.log(err);
+                    process.exit(1);
                 } else {
-                    return console.log(`User ${user.username} created`);
+                    console.log(`User ${user.username} created!`);
+                    process.exit(0);
                 }
             });
-            process.exit(0);
         });
     });
 });
