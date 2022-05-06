@@ -1,4 +1,4 @@
-const { Users } = require('../Models/index');
+const { Users } = require('../../Models');
 
 async function routes(fastify) {
 

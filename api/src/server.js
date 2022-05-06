@@ -1,6 +1,7 @@
 const config = require('./config.json');
 const Logger = require('./Utils/Logger');
 const mongoose = require("mongoose");
+const {readdirSync} = require('fs');
 
 // Disable logger
 const fastify = require('fastify')({
@@ -34,10 +35,16 @@ process.on('unhandledRejection', async (reason, promise) => {
 });
 process.on('warning', (...args) => { Logger.warn(...args) });
 
-// Register Routes
-['Users', 'Posts', 'Login', 'newAccount'].forEach(route => {
-    fastify.register(require(`./Routes/${route}`), { prefix: `/${route.toLowerCase()}` });
-    Logger.route(`Registered route: ${route}`);
+// Register endpoints
+readdirSync(`${__dirname}/endpoints`).forEach(folder => {
+    if (folder.includes('.js')) return;
+    readdirSync(`${__dirname}/endpoints/${folder}`).forEach(file => {
+        let prefix = file === "index.js" ? '/' + folder.toLowerCase() : `/${folder.toLowerCase()}/${file.split('.')[0].toLowerCase()}`;
+        fastify.register(require(`${__dirname}/endpoints/${folder}/${file}`), {
+            prefix: prefix
+        });
+        Logger.route(`Route loaded ${prefix}`);
+    });
 });
 
 // Connect to MongoDB

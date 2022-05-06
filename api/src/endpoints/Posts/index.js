@@ -1,4 +1,4 @@
-const { Posts } = require('../Models/index');
+const { Posts: Index } = require('../../Models');
 
 async function routes(fastify) {
     fastify.route({
@@ -6,7 +6,7 @@ async function routes(fastify) {
         url: '/',
         handler: async (request, reply) => {
             reply.send(
-                await Posts.find({})
+                await Index.find({})
             )
         }
     });
@@ -15,7 +15,7 @@ async function routes(fastify) {
         method: 'GET',
         url: '/:slug',
         handler: async (request, reply) => {
-            let post = await Posts.findOne({ slug: request.params.slug });
+            let post = await Index.findOne({ slug: request.params.slug });
 
             if (!post) {
                 return reply.status(404).send({

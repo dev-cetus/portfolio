@@ -1,4 +1,4 @@
-const { Users } = require('../Models/index');
+const { Users } = require('../../Models');
 const cryptoJS = require('crypto-js');
 const fastifyJwt = require("@fastify/jwt");
 
