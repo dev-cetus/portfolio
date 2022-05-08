@@ -34,7 +34,7 @@ async function routes(fastify) {
 
             let user = await Users.findOne({
                 where: {
-                    id: request.params.id
+                    _id: request.params.id
                 }
             });
 
@@ -91,9 +91,9 @@ async function routes(fastify) {
                         });
                     }
                 }
-
+                console.log(request.params.id);
                 Users.findOneAndUpdate({
-                    id: request.params.id
+                    _id: request.params.id
                 }, {
                     username: request.body.username,
                     updatedAt: Date.now()
