@@ -78,7 +78,7 @@ async function routes(fastify) {
             }
 
             switch(perms) {
-                case 'normal':
+                case 'user':
                 case 'admin':
                     break;
                 default:
