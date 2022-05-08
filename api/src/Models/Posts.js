@@ -9,14 +9,25 @@ const PostSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    content: {
+    subTitle: {
         type: String,
         required: true
     },
     image: {
         type: String,
         required: true,
-        default: null
+    },
+    content: {
+        type: String,
+        required: true
+    },
+    tags: {
+        type: [String],
+        required: true
+    },
+    author: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true
     },
     createdAt: {
         type: Number,
@@ -26,11 +37,6 @@ const PostSchema = new mongoose.Schema({
         type: Number,
         default: Date.now
     },
-    writtenBy: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
-        required: true
-    }
 })
 
 module.exports = mongoose.model('Posts', PostSchema);
