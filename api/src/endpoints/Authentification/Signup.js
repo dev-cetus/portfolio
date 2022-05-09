@@ -1,6 +1,5 @@
 const { Users } = require('../../Models');
 const cryptoJS = require('crypto-js');
-const fastifyJwt = require("@fastify/jwt");
 
 async function routes(fastify) {
     fastify.post(`/`, async (request, reply) => {
@@ -27,10 +26,10 @@ async function routes(fastify) {
             });
         }
 
-        if (username.length < 3 || username.length > 20) {
+        if (!username.match(/^\w{3,16}$/)) {
             return reply.code(400).send({
-                message: 'Username must be between 3 and 20 characters'
-            });
+                message: 'Username must be between 3 and 16 characters long and can only contain letters, numbers and underscores.'
+            })
         }
 
         // verify email with regex
@@ -92,7 +91,7 @@ async function routes(fastify) {
             password: passwordHash,
             perms
         }).then(user => {
-            return reply.send({
+            return reply.code(200).send({
                 id: user.id,
                 username: user.username,
                 email: user.email,

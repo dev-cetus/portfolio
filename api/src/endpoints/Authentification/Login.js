@@ -43,7 +43,7 @@ async function routes(fastify) {
             iat: Date.now(),
         });
 
-        return reply.send({
+        return reply.code(200).send({
             token: token,
             exp: fastify.jwt.decode(token).exp
         })

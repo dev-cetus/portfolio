@@ -2,7 +2,7 @@ const { Posts: Index } = require('../../Models');
 
 async function routes(fastify) {
     fastify.get(`/`, async (request, reply) => {
-        reply.send(
+        reply.code(200).send(
             await Index.find({})
         )
     })

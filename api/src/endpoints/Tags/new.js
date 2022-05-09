@@ -55,7 +55,7 @@ async function routes(fastify) {
                 })
             }).catch(() => {
                 return reply.code(500).send({
-                    message: "An error occured"
+                    message: "An error occurred"
                 })
             })
         }).catch(() => {

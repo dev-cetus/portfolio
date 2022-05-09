@@ -41,7 +41,41 @@ async function routes(fastify) {
 
         // Build slug
         let slug = title.toLowerCase().replace(/[\s$]/g, '-').replace(/[éè]/g, 'e').replace(/à/g, 'a').replace(/ç/g, 'c').replace(/[^a-z0-9-]/g, '');
-        
+
+        // Verify if slug is unique
+        await Posts.findOne({
+            where: {
+                slug
+            }
+        }).then(() => {
+            return reply.code(400).send({
+                message: 'Slug already exists, choose another title'
+            });
+        })
+
+        // Verify if author exists
+        await Posts.findOne({
+            where: {
+                author
+            }
+        }).then(() => {
+            return reply.code(400).send({
+                message: 'Author does not exist'
+            });
+        })
+
+        // Verify if tags exist
+        for (let i = 0; i < tags.length; i++) {
+            await Posts.findOne({
+                where: {
+                    tags: tags[i]
+                }
+            }).then(() => {
+                return reply.code(400).send({
+                    message: `Tag ${tags[i]} does not exist`
+                });
+            })
+        }
 
         await Posts.create({
             title,
@@ -55,10 +89,9 @@ async function routes(fastify) {
             return reply.send({
                 message: 'Post created',
             });
-        }).catch((err) => {
+        }).catch(() => {
             return reply.code(500).send({
                 message: 'Error creating post',
-                err
             })
         })
     })

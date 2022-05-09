@@ -36,8 +36,8 @@ readLine.question('Username: ', (answer) => {
                 process.exit(1);
             }
 
-            if (username.length < 3 || username.length > 20) {
-                console.log("Username must be between 3 and 20 characters");
+            if (!username.match(/^\w{3,16}$/)) {
+                console.log("Username must be between 3 and 16 characters");
                 process.exit(1);
             }
 

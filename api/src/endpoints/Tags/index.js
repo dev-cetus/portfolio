@@ -8,8 +8,8 @@ async function routes(fastify) {
                 return reply.send(tags);
             })
             .catch(() => {
-                return reply.send({
-                    error: 'Tags not found'
+                return reply.code(404).send({
+                    message: 'Tags not found'
                 });
             })
     })
