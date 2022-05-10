@@ -12,5 +12,6 @@
   },
   "mongodb": {
     "uri": "mongodb://localhost:27017/portfolio"
-  }
+  },
+  "permissions": ["none", "user", "admin"]
 }

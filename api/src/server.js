@@ -2,6 +2,9 @@ const config = require('./config.json');
 const Logger = require('./Utils/Logger');
 const mongoose = require("mongoose");
 const {readdirSync} = require('fs');
+const {Users} = require('./Models/index');
+
+let routesCollection = new Map();
 
 // Disable logger
 const fastify = require('fastify')({
@@ -40,7 +43,8 @@ readdirSync(`${__dirname}/endpoints`).forEach(folder => {
     if (folder.includes('.js')) return;
     readdirSync(`${__dirname}/endpoints/${folder}`).forEach(file => {
         let prefix = file === "index.js" ? '/' + folder.toLowerCase() : `/${folder.toLowerCase()}/${file.split('.')[0].toLowerCase()}`;
-        fastify.register(require(`${__dirname}/endpoints/${folder}/${file}`), {
+        routesCollection.set(prefix, require(`${__dirname}/endpoints/${folder}/${file}`));
+        fastify.register(require(`${__dirname}/endpoints/${folder}/${file}`).routes, {
             prefix: prefix
         });
         Logger.route(`Route loaded ${prefix}`);
@@ -48,8 +52,44 @@ readdirSync(`${__dirname}/endpoints`).forEach(folder => {
 });
 
 // Add hooks
-fastify.addHook('onRequest', async (request, reply) => {
+fastify.addHook('preValidation', async (request, reply) => {
+   if (routesCollection.has(request.raw.url)) {
+       let route = routesCollection.get(request.raw.url);
+       if (!config.permissions.includes(route.permission)) {
+           reply.code(403).send({
+               error: 'Forbidden'
+           })
+       }
+       if (!route.permissions.includes("none")) {
+           await request.jwtVerify();
 
+           if (request.user.id) {
+               await Users.findOne({
+                   _id: request.user.id
+               }).then(user => {
+                   if (!user) {
+                       reply.code(401).send({
+                           error: "Unauthorized"
+                       })
+                   } else {
+                       if (!user.permissions.includes(route.permissions)) {
+                           reply.code(401).send({
+                               error: "Unauthorized"
+                           })
+                       }
+                   }
+               }).catch(() => {
+                   reply.code(401).send({
+                       error: "Unauthorized"
+                   })
+               })
+           }
+       }
+   } else {
+       reply.code(404).send({
+           error: "Route not found"
+       })
+   }
 })
 
 // Connect to MongoDB

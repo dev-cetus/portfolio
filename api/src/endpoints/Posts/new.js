@@ -36,7 +36,7 @@ module.exports = {
             }
 
             // Build slug
-            let slug = title.toLowerCase().replace(/[\s$]/g, '-').replace(/[éè]/g, 'e').replace(/à/g, 'a').replace(/ç/g, 'c').replace(/[^a-z0-9-]/g, '');
+            let slug = title.toLowerCase().replace(/[\s$]/g, '-').replace(/[éè]/g, 'e').replace(/à/g, 'a').replace(/ç/g, 'c').replace(/[^a-z\d-]/g, '');
 
             // Verify if slug is unique
             await Posts.findOne({

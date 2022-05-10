@@ -1,7 +1,7 @@
 const { Posts: Index } = require('../../Models');
 
 module.exports = {
-    permissions: ["user"],
+    permissions: ["none"],
     async routes(fastify) {
         fastify.get(`/`, async (request, reply) => {
             reply.code(200).send(

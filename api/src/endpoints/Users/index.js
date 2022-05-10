@@ -5,7 +5,7 @@ module.exports = {
     async routes(fastify) {
         fastify.get(`/`, async (request, reply) => {
             await request.jwtVerify();
-            
+
             let users = await Users.find({}).select('-password');
 
             return reply.send(users);
