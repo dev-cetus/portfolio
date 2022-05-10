@@ -82,7 +82,7 @@ readLine.question('Username: ', (answer) => {
                 username: username,
                 email: email,
                 password: cryptoJS.SHA256(password).toString(),
-                perms: 'admin'
+                permissions: 'admin'
             }, (err, user) => {
                 if (err) {
                     console.log(err);

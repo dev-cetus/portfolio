@@ -1,51 +1,45 @@
 const { Users } = require('../../Models');
 
-async function routes(fastify) {
+module.exports = {
+    permissions: ["admin"],
+    async routes(fastify) {
+        fastify.get(`/`, async (request, reply) => {
+            await request.jwtVerify();
+            
+            let users = await Users.find({}).select('-password');
 
-    fastify.get(`/`, async (request, reply) => {
-        await request.jwtVerify();
+            return reply.send(users);
+        })
 
-        if (request.user.perms !== 'admin') {
-            return reply.code(403).send({
-                message: 'You do not have permission to do this'
-            });
-        }
+        fastify.get(`/:id`, async (request, reply) => {
+            await request.jwtVerify();
 
-        let users = await Users.find({}).select('-password');
-
-        return reply.send(users);
-    })
-
-    fastify.get(`/:id`, async (request, reply) => {
-        await request.jwtVerify();
-
-        if (request.user.perms !== 'admin') {
-            return reply.code(403).send({
-                message: 'You do not have permission to access this resource'
-            });
-        }
-
-        let user = await Users.findOne({
-            where: {
-                _id: request.params.id
+            if (request.user.permissions !== 'admin') {
+                return reply.code(403).send({
+                    error: 'You do not have permission to access this resource'
+                });
             }
-        });
 
-        if(!user) {
-            return reply.code(404).send({
-                message: 'User not found'
+            let user = await Users.findOne({
+                where: {
+                    _id: request.params.id
+                }
             });
-        }
 
-        return reply.send({
-            id: user.id,
-            username: user.username,
-            email: user.email,
-            perms: user.perms,
-            createdAt: user.createdAt,
-            updatedAt: user.updatedAt
+            if (!user) {
+                return reply.code(404).send({
+                    error: 'User not found'
+                });
+            }
+
+            return reply.send({
+                id: user.id,
+                username: user.username,
+                email: user.email,
+                permissions: user.permissions,
+                createdAt: user.createdAt,
+                updatedAt: user.updatedAt
+            });
         });
-    });
+    }
 }
-
-module.exports = routes;

@@ -47,6 +47,11 @@ readdirSync(`${__dirname}/endpoints`).forEach(folder => {
     });
 });
 
+// Add hooks
+fastify.addHook('onRequest', async (request, reply) => {
+
+})
+
 // Connect to MongoDB
 mongoose.connect(config.mongodb.uri, {
     autoIndex: false,

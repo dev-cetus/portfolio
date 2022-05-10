@@ -1,23 +1,24 @@
 const { Posts: Index } = require('../../Models');
 
-async function routes(fastify) {
-    fastify.get(`/`, async (request, reply) => {
-        reply.code(200).send(
-            await Index.find({})
-        )
-    })
+module.exports = {
+    permissions: ["user"],
+    async routes(fastify) {
+        fastify.get(`/`, async (request, reply) => {
+            reply.code(200).send(
+                await Index.find({})
+            )
+        })
 
-    fastify.get(`/:slug`, async (request, reply) => {
-        let post = await Index.findOne({ slug: request.params.slug });
+        fastify.get(`/:slug`, async (request, reply) => {
+            let post = await Index.findOne({slug: request.params.slug});
 
-        if (!post) {
-            return reply.status(404).send({
-                message: 'Post not found'
-            });
-        }
+            if (!post) {
+                return reply.status(404).send({
+                    error: 'Post not found'
+                });
+            }
 
-        reply.status(200).send(post);
-    })
+            reply.status(200).send(post);
+        })
+    }
 }
-
-module.exports = routes;
