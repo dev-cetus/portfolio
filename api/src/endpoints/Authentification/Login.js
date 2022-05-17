@@ -2,7 +2,6 @@ const { Users } = require('../../Models');
 const cryptoJS = require('crypto-js');
 
 module.exports = {
-    permissions: ["none"],
     async routes(fastify) {
         fastify.post(`/`, async (request, reply) => {
             if (!request.body) {

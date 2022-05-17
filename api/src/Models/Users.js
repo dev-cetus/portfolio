@@ -14,7 +14,7 @@ const UserSchema = new mongoose.Schema({
         required: true
     },
     permissions: {
-        type: String,
+        type: [String],
         required: true,
     },
     createdAt: {

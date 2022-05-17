@@ -55,7 +55,7 @@ readLine.question('Username: ', (answer) => {
                 }
             });
 
-            if (user.username.toLowerCase() === username.toLowerCase()) {
+            if (user && user.username.toLowerCase() === username.toLowerCase()) {
                 console.log("Username is already taken");
                 process.exit(1);
             }
@@ -82,7 +82,7 @@ readLine.question('Username: ', (answer) => {
                 username: username,
                 email: email,
                 password: cryptoJS.SHA256(password).toString(),
-                permissions: 'admin'
+                permissions: ["admin"]
             }, (err, user) => {
                 if (err) {
                     console.log(err);

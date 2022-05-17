@@ -1,11 +1,11 @@
 const {Users} = require("../../Models");
 const cryptoJS = require("crypto-js");
+const {isAdmin} = require("../../Utils/Authorization");
 
 module.exports = {
-    permissions: ["admin"],
     async routes(fastify) {
         fastify.post(`/:id/username`, async (request, reply) => {
-            await request.jwtVerify();
+            await isAdmin(request, reply)
 
             if (!request.body || !request.body.username) {
                 return reply.code(400).send({
@@ -61,7 +61,7 @@ module.exports = {
         });
 
         fastify.post(`/:id/email`, async (request, reply) => {
-            await request.jwtVerify();
+            await isAdmin(request, reply)
 
             if (!request.body || !request.body.email) {
                 return reply.code(400).send({
@@ -116,8 +116,8 @@ module.exports = {
             });
         });
 
-        fastify.post(`:id/password`, async (request, reply) => {
-            await request.jwtVerify();
+        fastify.post(`/:id/password`, async (request, reply) => {
+            await isAdmin(request, reply)
 
             if (!request.body || !request.body.password) {
                 return reply.code(400).send({
@@ -154,8 +154,8 @@ module.exports = {
             });
         });
 
-        fastify.post(`:id/permissions`, async (request, reply) => {
-            await request.jwtVerify();
+        fastify.post(`/:id/permissions`, async (request, reply) => {
+            await isAdmin(request, reply)
 
             if (!request.body || !request.body.permissions) {
                 return reply.code(400).send({

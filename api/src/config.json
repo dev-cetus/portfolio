@@ -13,5 +13,15 @@
   "mongodb": {
     "uri": "mongodb://localhost:27017/portfolio"
   },
-  "permissions": ["none", "user", "admin"]
+  "permissions": ["none", "user", "admin"],
+  "params": [
+    {
+      "param": "id",
+      "regex": "^[a-z0-9]{24}$"
+    },
+    {
+      "param": "slug",
+      "regex": "^[a-zA-Z0-9-_]$"
+    }
+  ]
 }

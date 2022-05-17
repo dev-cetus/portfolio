@@ -1,10 +1,16 @@
 const { Users } = require('../../Models');
 
 module.exports = {
-    permissions: ["admin"],
     async routes(fastify) {
         fastify.get(`/`, async (request, reply) => {
             await request.jwtVerify();
+
+            if (!request.user.permissions.includes("admin")) {
+                return reply.code(403).send({
+                    statusCode: 403,
+                    message: "Forbidden"
+                })
+            }
 
             let users = await Users.find({}).select('-password');
 
@@ -13,6 +19,13 @@ module.exports = {
 
         fastify.get(`/:id`, async (request, reply) => {
             await request.jwtVerify();
+
+            if (!request.user.permissions.includes("admin")) {
+                return reply.code(403).send({
+                    statusCode: 403,
+                    message: "Forbidden"
+                })
+            }
 
             if (request.user.permissions !== 'admin') {
                 return reply.code(403).send({

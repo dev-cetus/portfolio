@@ -1,12 +1,11 @@
 const { Users } = require('../../Models');
 const cryptoJS = require('crypto-js');
+const {isAdmin} = require('../../Utils/Authorization')
 
 module.exports = {
-    permissions: ["admin"],
     async routes(fastify) {
         fastify.post(`/`, async (request, reply) => {
-            // verify jwt
-            await request.jwtVerify();
+            await isAdmin(request, reply)
 
             if (!request.body) {
                 reply.code(400).send({
