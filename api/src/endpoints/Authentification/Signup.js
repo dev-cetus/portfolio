@@ -78,12 +78,10 @@ module.exports = {
                     });
             }
 
-            let passwordHash = cryptoJS.SHA256(password).toString();
-
-            Users.create({
+            await Users.create({
                 username,
                 email,
-                password: passwordHash,
+                password: cryptoJS.SHA256(password).toString(),
                 permissions
             }).then(user => {
                 return reply.code(200).send({

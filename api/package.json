@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Message: no test specified\" && exit 1",
     "server": "node src/server.js",
-    "createUser": "node scripts/createDefaultUser.js"
+    "createDefaultUser": "node scripts/createDefaultUser.js"
   },
   "author": "",
   "license": "ISC",
