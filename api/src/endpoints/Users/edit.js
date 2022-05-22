@@ -1,11 +1,11 @@
 const {Users} = require("../../Models");
 const cryptoJS = require("crypto-js");
-const {isAdmin} = require("../../Utils/Authorization");
+const {isAdmin, isUser} = require("../../Utils/Authorization");
 
 module.exports = {
     async routes(fastify) {
         fastify.post(`/:id/username`, async (request, reply) => {
-            await isAdmin(request, reply)
+            await isUser(request, reply)
 
             if (!request.body || !request.body.username) {
                 return reply.code(400).send({
@@ -61,7 +61,7 @@ module.exports = {
         });
 
         fastify.post(`/:id/email`, async (request, reply) => {
-            await isAdmin(request, reply)
+            await isUser(request, reply)
 
             if (!request.body || !request.body.email) {
                 return reply.code(400).send({
@@ -117,7 +117,7 @@ module.exports = {
         });
 
         fastify.post(`/:id/password`, async (request, reply) => {
-            await isAdmin(request, reply)
+            await isUser(request, reply)
 
             if (!request.body || !request.body.password) {
                 return reply.code(400).send({

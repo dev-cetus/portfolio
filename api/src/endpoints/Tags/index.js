@@ -1,7 +1,6 @@
 const {Tags} = require('../../Models');
 
 module.exports = {
-    permissions: ["none"],
     async routes(fastify) {
         fastify.get('/', async (request, reply) => {
             await Tags.find({})

@@ -1,10 +1,10 @@
 const {Tags} = require("../../Models");
+const {isAdmin} = require("../../Utils/Authorization");
 
 module.exports = {
-    permissions: ["admin"],
     async routes(fastify) {
         fastify.delete(`/:id`, async (request, reply) => {
-            await request.jwtVerify();
+            await isAdmin(request, reply);
 
             // delete tag
             await Tags.deleteOne({

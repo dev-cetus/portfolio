@@ -6,7 +6,7 @@
         <p>Young self-taught developer</p>
       </section>
       <section id="buttons">
-        <ButtonBig to="/blog" text="Blog" icon="fas fa-pen-fancy" color="#6AFCCC" />
+        <!-- <ButtonBig to="/blog" text="Blog" icon="fas fa-pen-fancy" color="#6AFCCC" /> -->
         <ButtonBig to="https://github.com/dev-cetus" text="Github" icon="fab fa-github" color="#FFFFFF" />
       </section>
       <section id="scrollDown" v-on:click="goTo('#skills')">
