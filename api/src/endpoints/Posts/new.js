@@ -1,4 +1,4 @@
-const {Posts} = require("../../Models");
+const {Posts, Tags} = require("../../Models");
 
 
 module.exports = {
@@ -45,36 +45,22 @@ module.exports = {
             }
 
             // Verify if tags exist
-            /*
-            * In database, "tags" field schema:
-            * tags: {
-                    type: [String],
-                    required: true
-                },
-                *
-                * In request, "tags" field schema:
-                * tags: {
-                    type: [String],
-                    required: true
-                }
-            */
-
-            for (let i = 0; i < tags.length; i++) {
-                console.log(tags)
-                await Posts.findOne({
-                    $in: {
-                        tags: tags[i]
-                    }
-                }).then(() => {
-                    return reply.code(400).send({
-                        error: `Tag \`${tags[i]}\` does not exist`
+            await Tags.find({})
+                .then((tags) => {
+                    console.log(tags)
+                    request.body.tags.forEach((tag) => {
+                        if (!tags.find((t) => t.name === tag)) {
+                            return reply.code(400).send({
+                                error: `Tag \`${tag}\` does not exist`
+                            });
+                        }
                     });
-                }).catch(() => {
+                })
+                .catch(() => {
                     return reply.code(400).send({
-                        error: 'Tags must be an array'
+                        error: 'Tags do not exist'
                     });
-                });
-            }
+                })
 
             // Verify if author exists
             await Posts.findOne({
